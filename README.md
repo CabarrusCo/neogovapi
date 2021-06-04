@@ -22,6 +22,10 @@ Our team is responsible for software development and support for the [County](ht
 ---
 The Neogov API Client is an API Client for Neogov written in Go.
 
+### Auth
+---
+The Neogov API uses Basic Auth. This can be passed to the Client via the username and password parameters.
+
 ### Coverage
 ---
 #### Department
