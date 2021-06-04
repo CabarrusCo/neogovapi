@@ -18,10 +18,6 @@ The Business & Location Innovative Services (BLIS) team for Cabarrus County cons
 
 Our team is responsible for software development and support for the [County](https://www.cabarruscounty.us/departments/information-technology). We work under the direction of the Chief Information Officer.
 
-### About
----
-The Neogov API Client is an API Client for Neogov written in Go.
-
 ### Auth
 ---
 The Neogov API uses Basic Auth. This can be passed to the Client via the username and password parameters.
