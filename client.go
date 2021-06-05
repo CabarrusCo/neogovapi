@@ -39,6 +39,10 @@ func (c *Client) Send(r *http.Request, v interface{}) error {
 		return fmt.Errorf("Error encountered on %v. Got status code %v", r.URL, res.StatusCode)
 	}
 
+	if v == nil {
+		return nil
+	}
+
 	return json.NewDecoder(res.Body).Decode(v)
 
 }

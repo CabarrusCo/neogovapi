@@ -61,48 +61,48 @@ func (c *Client) QueryEmployeeByNumber(ctx context.Context, employeenumber int) 
 }
 
 func (c *Client) QueryEmployeeEvaluations(ctx context.Context, id string) ([]Evaluation, error) {
-	evals := []Evaluation{}
-
 	r, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.neogov.com/rest/employees/%v/evaluations", id), nil)
 	if err != nil {
-		return evals, err
+		return nil, err
 	}
+
+	evals := []Evaluation{}
 
 	err = c.Send(r, &evals)
 	if err != nil {
-		return evals, err
+		return nil, err
 	}
 
 	return evals, nil
 }
 
 func (c *Client) queryMultipleEmployees(ctx context.Context, url string) ([]EmployeeQueryResponse, error) {
-	eqr := []EmployeeQueryResponse{}
-
 	r, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		return eqr, err
+		return nil, err
 	}
+
+	eqr := []EmployeeQueryResponse{}
 
 	err = c.Send(r, &eqr)
 	if err != nil {
-		return eqr, err
+		return nil, err
 	}
 
 	return eqr, nil
 }
 
 func (c *Client) querySingleEmployee(ctx context.Context, url string) (*EmployeeQueryResponse, error) {
-	eqr := &EmployeeQueryResponse{}
-
 	r, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		return eqr, err
+		return nil, err
 	}
+
+	eqr := &EmployeeQueryResponse{}
 
 	err = c.Send(r, eqr)
 	if err != nil {
-		return eqr, err
+		return nil, err
 	}
 
 	return eqr, nil
