@@ -22,6 +22,46 @@ Our team is responsible for software development and support for the [County](ht
 ---
 The Neogov API uses Basic Auth. This can be passed to the Client via the username and password parameters.
 
+### Quick Examples
+---
+
+Spinning up a new client
+```
+ngClient := neogovapi.NewClient("yourusername", "yourpassword") //Store these securely
+```
+
+Querying Employees
+```
+	allEmps, err := ngClient.QueryEmployees(context.Background(), 10, 1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", allEmps)
+```
+
+Querying Departments
+```
+	allDepts, err := ngClient.QueryDepartments(context.Background())
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", allDepts)
+```
+
+Querying Evaluations
+```
+	allEvals, err := ngClient.QueryEvaulations(context.Background(), 10, 1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", allEvals)
+```
 ### Coverage
 ---
 #### Department
@@ -43,6 +83,26 @@ The Neogov API uses Basic Auth. This can be passed to the Client via the usernam
 
 * GET /rest/evaluations
 * GET /rest/evaluations/:evaluationsID
+
+If an endpoint isn't covered, you can use the Send function in the client to handle these until we make them available. Rough example below
+
+```
+	emps := make([]map[string]interface{}, 0)
+
+	r, err := http.NewRequestWithContext(context.Background(), "GET", "https://api.neogov.com/rest/employees?perpage=10&pagenumber=1", nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = ngClient.Send(r, &emps)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", emps)
+```
 
 
 More coverage to be added with each release.
