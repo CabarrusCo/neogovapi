@@ -54,13 +54,13 @@ Querying Departments
 
 Querying Evaluations
 ```
-	allEvals, err := ngClient.QueryEvaulations(context.Background(), 10, 1)
+	allEmps, err := ngClient.QueryEvaluations(context.Background(), 99999, 1)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Printf("%+v", allEvals)
+	fmt.Printf("%+v", allEmps)
 ```
 ### Coverage
 ---
