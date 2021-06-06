@@ -22,18 +22,18 @@ func (c *Client) QueryDepartments(ctx context.Context) ([]DepartmentResponse, er
 	return dr, nil
 }
 
-func (c *Client) QueryDepartmentByID(ctx context.Context, id string) (*DepartmentResponse, error) {
+func (c *Client) QueryDepartmentByID(ctx context.Context, id string) (DepartmentResponse, error) {
+	d := DepartmentResponse{}
+
 	r, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.neogov.com/rest/departments/%v", id), nil)
 	if err != nil {
-		return nil, err
+		return d, err
 	}
 
-	dr := &DepartmentResponse{}
-
-	err = c.Send(r, dr)
+	err = c.Send(r, &d)
 	if err != nil {
-		return nil, err
+		return d, err
 	}
 
-	return dr, nil
+	return d, nil
 }

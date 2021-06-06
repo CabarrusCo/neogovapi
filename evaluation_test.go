@@ -8,7 +8,7 @@ import (
 func TestQueryEvaluations(t *testing.T) {
 	ngClient := NewClient(username, password)
 
-	evals, err := ngClient.QueryEvaulations(context.Background(), 10, 1)
+	evals, err := ngClient.QueryEvaluations(context.Background(), 10, 1)
 	if err != nil {
 		t.Error(err)
 	}

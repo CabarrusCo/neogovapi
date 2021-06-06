@@ -8,12 +8,12 @@ import (
 )
 
 func (c *Client) QueryEmployees(ctx context.Context, perpage int, pagenumber int) ([]EmployeeQueryResponse, error) {
-	qme, err := c.queryMultipleEmployees(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees?perpage=%v&pagenumber=%v", perpage, pagenumber))
+	e, err := c.queryMultipleEmployees(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees?perpage=%v&pagenumber=%v", perpage, pagenumber))
 	if err != nil {
 		return nil, err
 	}
 
-	return qme, nil
+	return e, nil
 }
 
 func (c *Client) QueryEmployeesByCreatedDate(ctx context.Context, startDate string, endDate string) ([]EmployeeQueryResponse, error) {
@@ -21,12 +21,12 @@ func (c *Client) QueryEmployeesByCreatedDate(ctx context.Context, startDate stri
 	params.Add("from", startDate)
 	params.Add("to", endDate)
 
-	qme, err := c.queryMultipleEmployees(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/created?%v", params.Encode()))
+	e, err := c.queryMultipleEmployees(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/created?%v", params.Encode()))
 	if err != nil {
 		return nil, err
 	}
 
-	return qme, nil
+	return e, nil
 }
 
 func (c *Client) QueryEmployeesByUpdatedDate(ctx context.Context, startDate string, endDate string) ([]EmployeeQueryResponse, error) {
@@ -34,30 +34,30 @@ func (c *Client) QueryEmployeesByUpdatedDate(ctx context.Context, startDate stri
 	params.Add("from", startDate)
 	params.Add("to", endDate)
 
-	qme, err := c.queryMultipleEmployees(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/updated?%v", params.Encode()))
+	e, err := c.queryMultipleEmployees(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/updated?%v", params.Encode()))
 	if err != nil {
 		return nil, err
 	}
 
-	return qme, nil
+	return e, nil
 }
 
-func (c *Client) QueryEmployeeByID(ctx context.Context, employeeID string) (*EmployeeQueryResponse, error) {
-	qse, err := c.querySingleEmployee(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/%v", employeeID))
+func (c *Client) QueryEmployeeByID(ctx context.Context, employeeID string) (EmployeeQueryResponse, error) {
+	e, err := c.querySingleEmployee(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/%v", employeeID))
 	if err != nil {
-		return nil, err
+		return e, err
 	}
 
-	return qse, nil
+	return e, nil
 }
 
-func (c *Client) QueryEmployeeByNumber(ctx context.Context, employeenumber int) (*EmployeeQueryResponse, error) {
-	qse, err := c.querySingleEmployee(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/employeenumber/%v", employeenumber))
+func (c *Client) QueryEmployeeByNumber(ctx context.Context, employeenumber int) (EmployeeQueryResponse, error) {
+	e, err := c.querySingleEmployee(ctx, fmt.Sprintf("https://api.neogov.com/rest/employees/employeenumber/%v", employeenumber))
 	if err != nil {
-		return nil, err
+		return e, err
 	}
 
-	return qse, nil
+	return e, nil
 }
 
 func (c *Client) QueryEmployeeEvaluations(ctx context.Context, id string) ([]Evaluation, error) {
@@ -82,28 +82,28 @@ func (c *Client) queryMultipleEmployees(ctx context.Context, url string) ([]Empl
 		return nil, err
 	}
 
-	eqr := []EmployeeQueryResponse{}
+	e := []EmployeeQueryResponse{}
 
-	err = c.Send(r, &eqr)
+	err = c.Send(r, &e)
 	if err != nil {
 		return nil, err
 	}
 
-	return eqr, nil
+	return e, nil
 }
 
-func (c *Client) querySingleEmployee(ctx context.Context, url string) (*EmployeeQueryResponse, error) {
+func (c *Client) querySingleEmployee(ctx context.Context, url string) (EmployeeQueryResponse, error) {
+	e := EmployeeQueryResponse{}
+
 	r, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		return nil, err
+		return e, err
 	}
 
-	eqr := &EmployeeQueryResponse{}
-
-	err = c.Send(r, eqr)
+	err = c.Send(r, &e)
 	if err != nil {
-		return nil, err
+		return e, err
 	}
 
-	return eqr, nil
+	return e, nil
 }

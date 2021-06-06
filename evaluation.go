@@ -6,34 +6,34 @@ import (
 	"net/http"
 )
 
-func (c *Client) QueryEvaulations(ctx context.Context, perpage int, pagenumber int) ([]Evaluation, error) {
+func (c *Client) QueryEvaluations(ctx context.Context, perpage int, pagenumber int) ([]Evaluation, error) {
 	r, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.neogov.com/rest/evaluations?perpage=%v&pagenumber=%v", perpage, pagenumber), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	evals := []Evaluation{}
+	e := []Evaluation{}
 
-	err = c.Send(r, &evals)
+	err = c.Send(r, &e)
 	if err != nil {
 		return nil, err
 	}
 
-	return evals, nil
+	return e, nil
 }
 
-func (c *Client) QueryEvaluationByID(ctx context.Context, id string) (*Evaluation, error) {
+func (c *Client) QueryEvaluationByID(ctx context.Context, id string) (Evaluation, error) {
+	e := Evaluation{}
+
 	r, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.neogov.com/rest/evaluations/%v", id), nil)
 	if err != nil {
-		return nil, err
+		return e, err
 	}
 
-	eval := &Evaluation{}
-
-	err = c.Send(r, eval)
+	err = c.Send(r, &e)
 	if err != nil {
-		return nil, err
+		return e, err
 	}
 
-	return eval, nil
+	return e, nil
 }
