@@ -54,7 +54,7 @@ Querying Departments
 
 Querying Evaluations
 ```
-	allEmps, err := ngClient.QueryEvaluations(context.Background(), 99999, 1)
+	allEmps, err := ngClient.QueryEvaluations(context.Background(), 10, 1)
 	if err != nil {
 		fmt.Println(err)
 		return
